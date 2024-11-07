@@ -102,7 +102,15 @@ function startQuiz(){
     currentQuestionIndex=0;
     score=0;
     nextButton.innerHTML="Next";
+    shuffleQuestions();
     showQuestion();
+}
+
+function shuffleQuestions() {
+    for (let i = questions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questions[i], questions[j]] = [questions[j], questions[i]];
+    }
 }
 
 function showQuestion(){
@@ -110,6 +118,7 @@ function showQuestion(){
     let currentQuestion=questions[currentQuestionIndex];
     let questionNo=currentQuestionIndex+1;
     questionElement.innerHTML=questionNo+". "+currentQuestion.question;
+    shuffleAnswers(currentQuestion.answers);
 
     currentQuestion.answers.forEach(answer=>{
         const button=document.createElement("button");
@@ -121,6 +130,13 @@ function showQuestion(){
         }
         button.addEventListener("click",selectAnswer);
     });
+}
+
+function shuffleAnswers(answers) {
+    for (let i = answers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [answers[i], answers[j]] = [answers[j], answers[i]];
+    }
 }
 
 function resetState(){
